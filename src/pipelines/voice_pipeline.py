@@ -1,18 +1,34 @@
-from resemblyzer import VoiceEncoder, preprocess_wav
 import numpy as np 
 import io
 import librosa
 import streamlit as st
 
+try:
+    from resemblyzer import VoiceEncoder, preprocess_wav
+    RESSEMBLYZER_AVAILABLE = True
+except Exception:
+    VoiceEncoder = None
+    preprocess_wav = None
+    RESSEMBLYZER_AVAILABLE = False
+
 
 @st.cache_resource
 def load_voice_encoder():
+    if not RESSEMBLYZER_AVAILABLE:
+        return None
     return VoiceEncoder()
 
 
 def get_voice_embedding(audio_bytes):
     try:
+        if not RESSEMBLYZER_AVAILABLE:
+            st.warning('Voice recognition is unavailable in this environment')
+            return None
+
         encoder = load_voice_encoder()
+        if encoder is None:
+            st.warning('Voice recognition is unavailable in this environment')
+            return None
 
         audio, sr = librosa.load(io.BytesIO(audio_bytes), sr=16000)
         wav = preprocess_wav(audio)
@@ -47,7 +63,14 @@ def identify_speaker(new_embedding, candidates_dict, threshold=0.65):
 def process_bulk_audio(audio_bytes, candidates_dict, threshold=0.65):
 
     try:
+        if not RESSEMBLYZER_AVAILABLE:
+            st.warning('Voice recognition is unavailable in this environment')
+            return {}
+
         encoder = load_voice_encoder()
+        if encoder is None:
+            st.warning('Voice recognition is unavailable in this environment')
+            return {}
 
         audio, sr = librosa.load(io.BytesIO(audio_bytes), sr=16000)
         segments = librosa.effects.split(audio, top_db=30)

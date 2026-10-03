@@ -8,13 +8,14 @@ def style_background_home():
         <style>
 
                 .stApp {
-                    background: #5865F2 !important;
+                    background: linear-gradient(135deg, #f8f3ea 0%, #eef7f4 52%, #edf0ff 100%) !important;
                 }
 
                 .stApp div[data-testid="stColumn"]{
-                    background-color:#E0E3FF !important;
+                    background-color:#ffffff !important;
                     padding:2.5rem !important;
-                    border-radius: 5rem !important;
+                    border-radius: 3rem !important;
+                    box-shadow: 0 18px 45px rgba(15, 23, 42, 0.08) !important;
                     }
         </style>  
 
@@ -79,7 +80,7 @@ def style_base_layout():
 
             button{
                 border-radius: 1.5rem !important;
-                background-color: #5865F2 !important;
+                background-color: #2f6f64 !important;
                 color: white !important;
                 padding: 10px 20px !important;
                 border: none !important;
@@ -88,7 +89,7 @@ def style_base_layout():
 
             button[kind="secondary"]{
                 border-radius: 1.5rem !important;
-                background-color: #EB459E !important;
+                background-color: #e87a3f !important;
                 color: white !important;
                 padding: 10px 20px !important;
                 border: none !important;
